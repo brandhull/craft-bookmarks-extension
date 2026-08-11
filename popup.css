@@ -1,0 +1,137 @@
+:root {
+  color-scheme: light dark;
+  --fg: #1d1d1f;
+  --muted: #8a8a8e;
+  --border: #d6d6db;
+  --field: #f1f1f4;
+  --field-hover: #eaeaef;
+  --accent: #0D73FF;
+  --accent-press: #0A5FD6;
+  --bg: #ffffff;
+  --ok: #1a8a4a;
+  --err: #c0362c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #f2f2f7;
+    --muted: #98989f;
+    --border: #3a3a3c;
+    --field: #2c2c2e;
+    --field-hover: #3a3a3c;
+    --bg: #1c1c1e;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+/* ---- Shared base elements (also used by the options page) ---- */
+h1 { font-size: 15px; margin: 0 0 12px; }
+label { font-size: 11px; color: var(--muted); }
+input, select, textarea {
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 8px;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+button {
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 9px;
+  padding: 9px;
+  cursor: pointer;
+}
+button:disabled { opacity: 0.5; cursor: default; }
+.status { min-height: 16px; margin: 8px 0 0; font-size: 12px; }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--err); white-space: pre-wrap; word-break: break-word; }
+
+/* ---- Clipper popup ---- */
+body.clip { width: 320px; padding: 12px; }
+.clip form { display: flex; flex-direction: column; gap: 10px; }
+.clip .field { display: flex; flex-direction: column; }
+
+.topbar { display: flex; align-items: center; gap: 8px; }
+.brand-icon { width: 22px; height: 22px; border-radius: 6px; }
+.brand-name { font-size: 14px; font-weight: 600; flex: 1; }
+.icon-btn {
+  width: 28px; height: 28px; padding: 0;
+  display: grid; place-items: center;
+  background: transparent; color: var(--muted);
+  border-radius: 8px;
+}
+.icon-btn:hover { background: var(--field); color: var(--fg); }
+
+/* Filled cards/rows */
+.title-card, .note-card, .url-row, .select-row {
+  background: var(--field);
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: background .12s ease, border-color .12s ease;
+}
+.title-card { padding: 10px 12px; }
+.note-card { padding: 8px 12px; }
+.url-row, .select-row {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 12px;
+}
+.url-row:hover, .select-row:hover { background: var(--field-hover); }
+.title-card:focus-within, .note-card:focus-within,
+.url-row:focus-within, .select-row:focus-within {
+  border-color: var(--accent);
+}
+
+/* Inputs sit borderless inside the filled cards */
+.clip .title-card textarea,
+.clip .note-card textarea,
+.clip .url-row input,
+.clip .select-row select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.clip .title-card textarea {
+  font-size: 15px; font-weight: 600; line-height: 1.3;
+  resize: none;
+}
+.clip .note-card textarea { font-size: 13px; resize: vertical; min-height: 40px; }
+.clip .url-row input { font-size: 12px; color: var(--muted); }
+
+.row-glyph { width: 18px; height: 18px; color: var(--muted); flex: 0 0 auto; }
+
+.section-label {
+  margin: 0 2px 6px;
+  font-size: 11px; font-weight: 600; letter-spacing: .02em;
+  color: var(--muted);
+  text-transform: none;
+}
+
+.select-row { position: relative; cursor: pointer; }
+.clip .select-row select {
+  appearance: none; -webkit-appearance: none;
+  flex: 1; cursor: pointer; font-size: 13px;
+}
+.chevron { width: 16px; height: 16px; color: var(--muted); flex: 0 0 auto; pointer-events: none; }
+
+.save {
+  width: 100%;
+  margin-top: 4px;
+  padding: 11px;
+  font-size: 14px;
+  border-radius: 12px;
+  background: var(--accent);
+}
+.save:hover { background: var(--accent-press); }

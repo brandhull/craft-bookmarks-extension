@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Craft Bookmarks — Settings</title>
+  <link rel="stylesheet" href="popup.css" />
+  <style>
+    body { width: 520px; }
+    .row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+    .hint { font-size: 11px; color: var(--muted); margin: 2px 0 0; }
+    .actions { display: flex; gap: 8px; }
+    .actions button { margin-top: 0; flex: 1; }
+    button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; background: rgba(127,127,127,.12); padding: 8px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Craft Bookmarks — Settings</h1>
+
+  <div class="row">
+    <label for="apiUrl">Craft API URL</label>
+    <input id="apiUrl" type="url" placeholder="https://connect.craft.do/…" />
+    <p class="hint">From Craft → sidebar → <strong>Imagine</strong> tab → create/enable an API connection that includes the "Random Bookmarks" document, then copy the API URL.</p>
+  </div>
+
+  <div class="row">
+    <label for="token">Bearer token (optional)</label>
+    <input id="token" type="password" placeholder="Only if your connection uses a separate token" />
+    <p class="hint">Leave blank if the token is already embedded in the API URL above.</p>
+  </div>
+
+  <div class="row">
+    <label for="collectionId">Collection ID</label>
+    <input id="collectionId" type="text" />
+    <p class="hint">Defaults to your "Bookmarks" collection.</p>
+  </div>
+
+  <div class="row">
+    <label for="categories">Categories (one per line)</label>
+    <textarea id="categories" rows="8"></textarea>
+  </div>
+
+  <div class="actions">
+    <button id="save" type="button">Save settings</button>
+    <button id="test" type="button" class="secondary">Test connection</button>
+  </div>
+
+  <p id="status" class="status" role="status"></p>
+  <pre id="testOut" hidden></pre>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
