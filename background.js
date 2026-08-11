@@ -91,16 +91,20 @@ async function testConnection() {
 // ---- Right-click "Save to Craft" on selected text ----
 const MENU_ID = "save-to-craft-selection";
 
-// Recreate the menu on install/update (removeAll avoids duplicate-id errors).
-chrome.runtime.onInstalled.addListener(() => {
+// (Re)create the menu on install/update. removeAll clears any prior copy first,
+// and the create callback reads lastError so a benign "duplicate id" (e.g. if the
+// item already exists) is consumed instead of surfacing as an unchecked error.
+function ensureContextMenu() {
   chrome.contextMenus.removeAll(() => {
-    chrome.contextMenus.create({
-      id: MENU_ID,
-      title: "Save to Craft",
-      contexts: ["selection"]
-    });
+    void chrome.runtime.lastError;
+    chrome.contextMenus.create(
+      { id: MENU_ID, title: "Save to Craft", contexts: ["selection"] },
+      () => void chrome.runtime.lastError
+    );
   });
-});
+}
+
+chrome.runtime.onInstalled.addListener(ensureContextMenu);
 
 chrome.contextMenus.onClicked.addListener(async (info) => {
   if (info.menuItemId !== MENU_ID) return;
